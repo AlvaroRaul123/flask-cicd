@@ -1,0 +1,15 @@
+
+# ETAPA 1 - construcción
+FROM python:3.10-alpine AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user -r requirements.txt
+
+# ETAPA 2 - imagen final
+FROM python:3.10-alpine
+WORKDIR /app
+COPY --from=builder /root/.local /root/.local
+COPY app.py .
+RUN adduser -D appuser
+USER appuser
+CMD ["python3", "app.py"]
