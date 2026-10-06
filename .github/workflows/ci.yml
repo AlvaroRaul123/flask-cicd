@@ -30,4 +30,6 @@ jobs:
           script: |
             cd /home/ubuntu/docker-level4
             git pull origin main
-            python3 app.py &
+            nohup python3 app.py > app.log 2>&1 &
+            sleep 2
+            echo "App desplegada"
